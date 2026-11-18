@@ -6,19 +6,24 @@ filename = "output.txt"
 
 root = tk.Tk()
 root.title("Password Generator")
-root.geometry("300x150")
+root.geometry("300x200")
+label = tk.Label(root, text="ready!", font=("Arial", 12))
+label.pack(pady=20)
 
 button_del = tk.Button(
     root,
     text="Click me to delete output file",
-    command=lambda: func.deleteFile(filename),
+    command=lambda: (
+        func.deleteFile(filename),
+        func.updateStatus(f"{filename} has been deleted.", label),
+    ),
 )
 button_del.pack(pady=10)
 
 button_generate = tk.Button(
     root,
     text="Click me to generate a password",
-    command=lambda: func.passwordGenerator(),
+    command=lambda: func.updateStatus(func.passwordGenerator(), label),
 )
 button_generate.pack(pady=10)
 

@@ -13,6 +13,10 @@ def deleteFile(file):
         print(f"file name '{file}' does not exist.")
 
 
+def updateStatus(message, label):
+    label.config(text=message)
+
+
 def passwordGenerator():
     passphrases = []
     passphrase = ""
