@@ -3,6 +3,8 @@ import os
 import string
 
 filename = "output.txt"
+passwordSaved = ""
+lastPasswordSaved = ""
 
 
 def deleteFile(file):
@@ -42,13 +44,25 @@ def passwordGenerator():
         + passphrases[3]
     )
 
-    if os.path.exists(filename):
-        # print("File found.")
-        with open(filename, "a", encoding="utf-8") as file:
-            file.write("\n" + password)
-    else:
-        # print("File not found.")
-        with open(filename, "w", encoding="utf-8") as file:
-            file.write(password)
+    global passwordSaved
+    passwordSaved = password
 
     return password
+
+
+def savePassword(label):
+    global lastPasswordSaved
+
+    if passwordSaved == lastPasswordSaved and passwordSaved != "":
+        updateStatus("you already saved this password.", label)
+    elif passwordSaved == "":
+        updateStatus("Generate a password first.", label)
+    else:
+        if os.path.exists(filename):
+            with open(filename, "a", encoding="utf-8") as file:
+                file.write("\n" + passwordSaved)
+        else:
+            print("File not found.")
+            with open(filename, "w", encoding="utf-8") as file:
+                file.write(passwordSaved)
+    lastPasswordSaved = passwordSaved
