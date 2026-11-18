@@ -1,22 +1,36 @@
 import random
 import os
 import string
+import time
 
 filename = "output.txt"
 passwordSaved = ""
 lastPasswordSaved = ""
+label = ""
+
+
+def setLabel(newLabel):
+    global label
+    label = newLabel
 
 
 def deleteFile(file):
+    global lastPasswordSaved
     if os.path.exists(file):
         os.remove(file)
-        print(f"{file} has been deleted.")
+        lastPasswordSaved = ""
+        updateStatus(f"{file} has been deleted.")
+        updateStatus(passwordSaved, 1000)
     else:
-        print(f"file name '{file}' does not exist.")
+        updateStatus(f"file name '{file}' does not exist.")
+        updateStatus(passwordSaved, 1000)
 
 
-def updateStatus(message, label):
-    label.config(text=message)
+def updateStatus(message, delay=0):
+    if delay:
+        label.after(delay, lambda: label.config(text=message))
+    else:
+        label.config(text=message)
 
 
 def passwordGenerator():
@@ -47,22 +61,23 @@ def passwordGenerator():
     global passwordSaved
     passwordSaved = password
 
+    updateStatus(password)
+
     return password
 
 
-def savePassword(label):
+def savePassword():
     global lastPasswordSaved
 
-    if passwordSaved == lastPasswordSaved and passwordSaved != "":
-        updateStatus("you already saved this password.", label)
-    elif passwordSaved == "":
-        updateStatus("Generate a password first.", label)
+    if passwordSaved == "":
+        updateStatus("Generate a password first.")
+        updateStatus(passwordSaved, 1000)
+    elif passwordSaved == lastPasswordSaved:
+        updateStatus("you already saved this password.")
+        updateStatus(passwordSaved, 1000)
     else:
-        if os.path.exists(filename):
-            with open(filename, "a", encoding="utf-8") as file:
-                file.write("\n" + passwordSaved)
-        else:
-            print("File not found.")
-            with open(filename, "w", encoding="utf-8") as file:
-                file.write(passwordSaved)
+        with open(filename, "a", encoding="utf-8") as file:
+            file.write(passwordSaved + "\n")
+        updateStatus("Password saved!")
+        updateStatus(passwordSaved, 1000)
     lastPasswordSaved = passwordSaved

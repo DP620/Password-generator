@@ -10,28 +10,26 @@ root.geometry("300x300")
 label = tk.Label(root, text="ready!", font=("Arial", 12))
 label.pack(pady=20)
 
+func.setLabel(label)
 
 button_generate = tk.Button(
     root,
     text="Click me to generate a password",
-    command=lambda: func.updateStatus(func.passwordGenerator(), label),
+    command=lambda: func.passwordGenerator(),
 )
 button_generate.pack(pady=10)
 
 button_save = tk.Button(
     root,
     text="Click me to save the password",
-    command=lambda: func.savePassword(label),
+    command=lambda: func.savePassword(),
 )
 button_save.pack(pady=10)
 
 button_del = tk.Button(
     root,
     text="Click me to delete output file",
-    command=lambda: (
-        func.deleteFile(filename),
-        func.updateStatus(f"{filename} has been deleted.", label),
-    ),
+    command=lambda: func.deleteFile(filename),
 )
 button_del.pack(pady=10)
 
