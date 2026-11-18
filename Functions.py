@@ -1,7 +1,6 @@
 import random
 import os
 import string
-import time
 
 filename = "output.txt"
 passwordSaved = ""
