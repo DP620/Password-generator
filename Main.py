@@ -5,6 +5,14 @@ import string
 filename = "output.txt"
 
 
+def deleteFile(file):
+    if os.path.exists(file):
+        os.remove(file)
+        print(f"{file} has been deleted.")
+    else:
+        print(f"file name '{file}' does not exist.")
+
+
 def passwordGenerator():
     passphrases = []
     passphrase = ""
