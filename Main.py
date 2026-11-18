@@ -5,7 +5,7 @@ import tkinter as tk
 filename = "output.txt"
 
 root = tk.Tk()
-root.title("Button example")
+root.title("Password Generator")
 root.geometry("300x150")
 
 button_del = tk.Button(
